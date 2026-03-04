@@ -6,7 +6,7 @@ const Header: React.FC = () => {
     const [timerMinutes, setTimerMinutes] = useState(2)
     const [timerSeconds, setTimerSeconds] = useState(0)
     const [timeActive, setTimeActive] = useState(false)
-    const [timeEnd, setTimeEnd] = useState(false)
+    const [timeEnd2, setTimeEnd2] = useState(false)
 
     useEffect(() => {
         const time = setInterval(() => {
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         }
         
         if (timerSeconds === 0 && timerMinutes === 0) {
-            setTimeEnd(true)
+            setTimeEnd2(true)
         }
         
         if (timerSeconds === 30 && timerMinutes === 0) {
@@ -32,11 +32,11 @@ const Header: React.FC = () => {
     }, [timerSeconds, timerMinutes])
 
     useEffect(() => {
-        if (timeEnd) {
+        if (timeEnd2) {
             setTimerSeconds(0)
             setTimerMinutes(0)
         }
-    }, [timeEnd])
+    }, [timeEnd2])
 
     return (
         <header className='header flex flex-col justify-center items-center'>
@@ -47,11 +47,11 @@ const Header: React.FC = () => {
                 className='header-timer' 
                 style={{
                     animation: timeActive ? "Time 1s ease-in-out" : "", 
-                    color: timeEnd ? "#fff" : "#FFBB00"
+                    color: timeEnd2 ? "#fff" : "#FFBB00"
                 }}
             >
                 <span>+</span> 
-                {`${timerMinutes.toString().padStart(2, '0')} : ${timerSeconds.toString().padStart(2, '0')}`} 
+                {timeEnd2 ? "00 : 00" : `${timerMinutes.toString().padStart(2, '0')} : ${timerSeconds.toString().padStart(2, '0')}`} 
                 <span>+</span>
             </h1>
         </header>

@@ -16,39 +16,10 @@ interface IRate {
 const Page: React.FC = () => {
     const [rateActive, setRateActive]  = useState<number>()
     const [data, setData] = useState<any>()
-    const [timerMinutes, setTimerMinutes]  = useState(1)
-    const [timerSeconds, setTimerSeconds]  = useState(59)
-    const [timeActive, setTimeActive]= useState(false)
+
     const [timeEnd, setTimeEnd] = useState(false)
-    useEffect(() => {
-    const time = setInterval(() => {
-        setTimerSeconds(prev => prev - 1)
-    }, 1000)
-    
 
-    return () => clearInterval(time)
-    }, [])
-    
-    useEffect(() => {
-        if (timerSeconds < 0) {
-            setTimerSeconds(59)
-            setTimerMinutes(prev => prev - 1)
-        }
-        else if (timerSeconds === 0 && timerMinutes === 0) {
-            const intervals = window.setInterval(() => {})
-            for (let i = 1; i < intervals; i++) {
-                window.clearInterval(i)
-            }
-            setTimeEnd(true)
-        }
-        if (timerSeconds === 30 && timerMinutes === 0) {
-            setTimeActive(true)
-        }
-        // console.log(timerMinutes + timerSeconds);
-        
-    }, [timerSeconds])
-
-
+    const [time, setTime] = useState(120)
 
     const [checkbox, setCheckbox] = useState<boolean>(false)
     useEffect(() => {
@@ -59,7 +30,16 @@ const Page: React.FC = () => {
                    
         }
         fetchData()
+        const interval = setInterval(() => {
+            setTime(prev => prev - 1)
+        }, 1000)
     }, [])
+
+    useEffect(() => {
+        if (time === 0) {
+            setTimeEnd(true)
+        }
+    }, [time])
     const [buyButton, setButButton] = useState<boolean>(false)
     return (
         <>
