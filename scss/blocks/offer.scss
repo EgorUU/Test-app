@@ -78,7 +78,7 @@
                     @media (max-width: 800px) {
                         display: none;
                     }
-                    padding-left: 122px;
+                    padding-left: 102px;
                     border-radius: 34px;
                     border: 2px solid #484D4E;
                     width: 748px;
@@ -92,6 +92,7 @@
                                 color: #fff;
                                 text-align: center;
                                 height: 65px;
+                                width: 197px;
                             }
                             h1 {
                                 font-size: 26px;
@@ -168,7 +169,7 @@
                             font-size: 50px;
                             height: 60px;
                             @media (max-width: 800px) {
-                                width: 119px;
+                                width: 134px;
                             }
 
                         }
@@ -211,7 +212,7 @@
                             }
                             p {
                                 font-size: 13px;
-                                margin-left: 50px;
+                                margin-left: 36px;
                                 margin-top: 0;
                             }
                         }
@@ -378,6 +379,7 @@
                             height: 55px;
                             font-size: 18px;
                         }
+                        animation: blink 6s infinite;
                     }
                     margin-top: 16px;
                     p {
@@ -476,7 +478,7 @@
     @media (max-width: 800px) {
         display: block;
         p {
-            height: 65px;
+            height: 59px;
         }
     }
 }
@@ -499,4 +501,16 @@ body {
     100% {
         color: #FF4E4E;
     }
+}
+
+@keyframes blink {
+  0%, 100% {
+    // opacity: 1;
+    background-color:rgba(253, 176, 86, 1); /* замените на ваш цвет */
+  }
+  50% {
+    // opacity: 0.6;
+    background-color: #ff0000; /* или другой цвет мигания */
+    color: #fff;
+  }
 }

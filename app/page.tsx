@@ -57,7 +57,7 @@ const Page: React.FC = () => {
                                 <div className="offer-main__content--rates-main-container flex items-center">
                                     <div className="offer-main__content--rates-main-container-price">
                                         <h1>{data && data.find((rate: any) => rate.is_best === true).period}</h1>
-                                            <h2>{data && data.find((rate: any) => rate.is_best === true).price} ₽</h2>
+                                            <h2>{timeEnd ? data && data.find((rate: any) => rate.is_best === true).full_price : data && data.find((rate: any) => rate.is_best === true).price} ₽</h2>
                                             <h3 style={{display: timeEnd ? "none" : ""}}>{data && data.find((rate: any) => rate.is_best === true).full_price} ₽</h3>
                                     </div>
                                     <div className="offer-main__content--rates-main-container-text">
@@ -65,7 +65,14 @@ const Page: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="offer-main__content--rates-others-item-discount" style={{display: timeEnd ? "none" : ""}}>
-                                    <h1>-{(((data && data.find((rate: any) => rate.is_best === true).price)/(data && data.find((rate: any) => rate.is_best === true).full_price))*100).toFixed(0)}%</h1>
+                                    <h1>{(() => { 
+  const bestRate = data && data.find((rate: any) => rate.is_best === true); 
+  if (bestRate && bestRate.full_price && bestRate.price) { 
+    const discountPercent = ((bestRate.full_price - bestRate.price) / bestRate.full_price) * 100; 
+    return `-${Math.round(discountPercent / 10) * 10}%`; 
+  } 
+  return '-%'; 
+})()}</h1>
                                 </div>
                                 <h1 className='offer-main__content--rates-others-item-hit'>хит!</h1>
                             </div>
@@ -75,34 +82,39 @@ const Page: React.FC = () => {
                                     <div className="offer-main__content--rates-others-item-container">
                                         <div>
                                             <h1>{data && data.find((rate: any) => rate.is_best === true).period}</h1>
-                                            <h2>{data && data.find((rate: any) => rate.is_best === true).price} ₽</h2>
+                                            <h2>{timeEnd ? data && data.find((rate: any) => rate.is_best === true).full_price : data && data.find((rate: any) => rate.is_best === true).price} ₽</h2>
                                             <h3 style={{display: timeEnd ? "none" : ""}}>{data && data.find((rate: any) => rate.is_best === true).full_price} ₽</h3>
                                         </div>
                                         <p>{data && data.find((rate: any) => rate.is_best === true).text}</p>
                                     </div>
                                     <h1 className='offer-main__content--rates-others-item-hit'>хит!</h1>
- <div className="offer-main__content--rates-others-item-discount" style={{display: timeEnd ? "none" : ""}}>
-                                    <h1>-{(((data && data.find((rate: any) => rate.is_best === true).price)/(data && data.find((rate: any) => rate.is_best === true).full_price))*100).toFixed(0)}%</h1>
-                                </div>
+                                    <div className="offer-main__content--rates-others-item-discount" style={{display: timeEnd ? "none" : ""}}>
+                                        <h1>{(() => { 
+  const bestRate = data && data.find((rate: any) => rate.is_best === true); 
+  if (bestRate && bestRate.full_price && bestRate.price) { 
+    const discountPercent = ((bestRate.full_price - bestRate.price) / bestRate.full_price) * 100; 
+    return `-${Math.round(discountPercent / 10) * 10}%`; 
+  } 
+  return '-%'; 
+})()}</h1>
+                                    </div>
                                 </div>
                                 
                                 {
                                     data ? data.filter((el: IRate) => el.is_best !== true).reverse().map((rate: any, index: any) => (
-                                        <>
-                                            <div className={`offer-main__content--rates-others-item ${index === rateActive ? "rate-active" : ""}`} id={index} key={index} onClick={() => setRateActive(index)}>
-                                                <div className="offer-main__content--rates-others-item-container">
-                                                    <div>
-                                                        <h1>{rate.period}</h1>
-                                                        <h2>{rate.price} ₽</h2>
-                                                        <h3  style={{display: timeEnd ? "none" : ""}}>{rate.full_price} ₽</h3>
-                                                    </div>
-                                                    <p>{rate.text}</p>
+                                        <div className={`offer-main__content--rates-others-item ${index === rateActive ? "rate-active" : ""}`} id={index} key={index} onClick={() => setRateActive(index)}>
+                                            <div className="offer-main__content--rates-others-item-container">
+                                                <div>
+                                                    <h1>{rate.period}</h1>
+                                                    <h2>{timeEnd ? rate.full_price : rate.price} ₽</h2>
+                                                    <h3  style={{display: timeEnd ? "none" : ""}}>{rate.full_price} ₽</h3>
                                                 </div>
-                                                <div className="offer-main__content--rates-others-item-discount" style={{display: timeEnd ? "none" : ""}}>
-                                                    <h1>-{((rate.price/rate.full_price)*100).toFixed(0)}%</h1>
-                                                </div>
+                                                <p>{rate.text}</p>
                                             </div>
-                                        </>
+                                            <div className="offer-main__content--rates-others-item-discount" style={{display: timeEnd ? "none" : ""}}>
+                                                <h1>-{(Math.round(((((rate.full_price - rate.price)/rate.full_price))*100)/ 10) * 10).toFixed(0)}%</h1>
+                                            </div>
+                                        </div>
                                     )) : <></>
                                 }
                                 
